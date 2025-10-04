@@ -21,4 +21,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 EXPOSE 2358
 
 # Start the worker
-CMD ["python", "worker.py"]
+CMD ["gunicorn", "--bind", "0.0.0.0:2358", "--workers", "4", "worker:app"]
+
