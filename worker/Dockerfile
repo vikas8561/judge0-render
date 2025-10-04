@@ -11,7 +11,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # Copy worker code and requirements
-COPY requirements.txt ./
+COPY requirements.txt ./ 
 COPY worker.py ./
 
 # Install Python dependencies
