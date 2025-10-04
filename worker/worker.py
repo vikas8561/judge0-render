@@ -1,7 +1,7 @@
 import os
 import logging
 from flask import Flask
-from psycopg2 import pool, PoolError
+from psycopg2 import pool
 
 # -------------------------
 # Logging setup
@@ -58,7 +58,7 @@ def home():
 
         return f"Judge0 Worker running! DB time: {result[0]}"
 
-    except PoolError:
+    except pool.PoolError:  # <-- Fixed reference here
         return "All database connections are busy, try again later.", 503
     except Exception as e:
         logging.error(f"DB query failed: {e}")
