@@ -22,7 +22,8 @@ RUN apt-get update && \
 RUN git clone --depth 1 https://github.com/ioi/isolate.git /tmp/isolate && \
     cd /tmp/isolate && \
     make isolate && \
-    make install && \
+    cp isolate /usr/local/bin/ && \
+    setcap cap_sys_admin,cap_dac_override,cap_setuid,cap_setgid+ep /usr/local/bin/isolate && \
     rm -rf /tmp/isolate
 
 # -------------------------
