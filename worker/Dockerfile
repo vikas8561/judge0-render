@@ -9,12 +9,26 @@ FROM python:3.11-slim
 WORKDIR /app
 
 # -------------------------
-# Install system dependencies (for compiling psycopg2, etc.)
+# Install system dependencies (for compiling psycopg2, isolate, etc.)
 # -------------------------
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         gcc g++ make curl unzip git wget ca-certificates && \
     rm -rf /var/lib/apt/lists/*
+
+# -------------------------
+# Install isolate for sandboxing code execution
+# -------------------------
+RUN git clone https://github.com/ioi/isolate.git /tmp/isolate && \
+    cd /tmp/isolate && \
+    make isolate && \
+    make install && \
+    rm -rf /tmp/isolate
+
+# -------------------------
+# Create /box directory for isolate sandbox
+# -------------------------
+RUN mkdir -p /box
 
 # -------------------------
 # Copy requirements first for caching
@@ -32,10 +46,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY worker.py ./
 
 # -------------------------
-# Optional: Create non-root user for security
+# Run as root for isolate (requires root privileges)
 # -------------------------
-RUN useradd -ms /bin/bash appuser
-USER appuser
 
 # -------------------------
 # Expose the port
