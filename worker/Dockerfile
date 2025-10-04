@@ -1,2 +1,2 @@
-# Use official Judge0 worker image
-FROM judge0/worker:latest
+# Use official Judge0 worker image from GitHub Container Registry
+FROM ghcr.io/judge0/worker:latest
