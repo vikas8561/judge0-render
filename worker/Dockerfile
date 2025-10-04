@@ -13,13 +13,13 @@ WORKDIR /app
 # -------------------------
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-        gcc g++ make curl unzip git wget ca-certificates && \
+        gcc g++ make curl unzip git wget ca-certificates libcap-dev libcap2-bin && \
     rm -rf /var/lib/apt/lists/*
 
 # -------------------------
 # Install isolate for sandboxing code execution
 # -------------------------
-RUN git clone https://github.com/ioi/isolate.git /tmp/isolate && \
+RUN git clone --depth 1 https://github.com/ioi/isolate.git /tmp/isolate && \
     cd /tmp/isolate && \
     make isolate && \
     make install && \
