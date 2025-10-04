@@ -1,4 +1,4 @@
-# Dockerfile for Judge0 Worker
+# Use official lightweight Python image
 FROM python:3.11-slim
 
 # Set working directory
@@ -13,7 +13,6 @@ RUN apt-get update && \
 # Copy worker code and requirements
 COPY requirements.txt ./
 COPY worker.py ./
-COPY other_files_or_folders ./other_files_or_folders
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
