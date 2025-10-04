@@ -45,4 +45,4 @@ EXPOSE 2358
 # -------------------------
 # Start the worker with Gunicorn
 # -------------------------
-CMD ["gunicorn", "--bind", "0.0.0.0:2358", "--workers", "4", "worker:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:2358", "--workers", "4", "worker:app", "redis"]
