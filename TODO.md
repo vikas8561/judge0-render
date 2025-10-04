@@ -7,6 +7,7 @@
 - [x] Update worker/Dockerfile to create /box directory
 
 ## Pending
-- [ ] Deploy the updated worker and test submissions (skipped as per user request)
-- [ ] Verify that isolate is installed and working (skipped as per user request)
-- [ ] Check logs for successful code execution without errors (skipped as per user request)
+- [ ] Deploy the updated worker and test submissions
+- [ ] Verify that isolate is installed and working
+- [ ] Check logs for successful code execution without errors
+- [x] Attempted local Docker build test but Docker not available in environment
