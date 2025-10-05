@@ -14,6 +14,7 @@ RUN apt-get update && apt-get install -y \
     wget \
     unzip \
     ca-certificates \
+    sudo \
     && rm -rf /var/lib/apt/lists/*
 
 # Create /box directory for isolate sandbox
@@ -32,3 +33,6 @@ WORKDIR /app
 
 # Default command to run the Judge0 API (adjust as needed)
 CMD ["./start-judge0-api.sh"]
+
+# Fix permissions for /box directory to avoid root issues
+RUN chown -R 1000:1000 /box || true
