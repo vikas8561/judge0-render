@@ -53,6 +53,10 @@ def run_isolate(args):
     # Remove any sudo usage in args
     filtered_args = [arg for arg in args if arg != "sudo"]
 
+    # Add --cg to disable cgroups if not supported in Render environment
+    if "--cg" not in filtered_args:
+        filtered_args.append("--cg")
+
     base_cmd = ["isolate"]
     base_cmd.extend(filtered_args)
     try:
