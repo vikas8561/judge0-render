@@ -50,8 +50,11 @@ def run_isolate(args):
     Run isolate command without root privileges.
     Adjust arguments as needed to avoid root requirements.
     """
+    # Remove any sudo usage in args
+    filtered_args = [arg for arg in args if arg != "sudo"]
+
     base_cmd = ["isolate"]
-    base_cmd.extend(args)
+    base_cmd.extend(filtered_args)
     try:
         result = subprocess.run(base_cmd, capture_output=True, text=True, check=True)
         logging.info(f"isolate output: {result.stdout}")
