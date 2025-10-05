@@ -33,6 +33,6 @@ services:
         fromDatabase:
           name: judge0-redis
           property: password
-    user: root
+    user: judge0
     healthCheckPath: "/ping"
     numInstances: 1
