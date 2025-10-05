@@ -1,5 +1,6 @@
 import os
 import logging
+import subprocess
 from flask import Flask
 from psycopg2 import pool
 
@@ -42,6 +43,24 @@ def close_pool():
         logging.info("🔒 Connection pool closed")
 
 # -------------------------
+# Function to run isolate without root
+# -------------------------
+def run_isolate(args):
+    """
+    Run isolate command without root privileges.
+    Adjust arguments as needed to avoid root requirements.
+    """
+    base_cmd = ["isolate"]
+    base_cmd.extend(args)
+    try:
+        result = subprocess.run(base_cmd, capture_output=True, text=True, check=True)
+        logging.info(f"isolate output: {result.stdout}")
+        return result.stdout
+    except subprocess.CalledProcessError as e:
+        logging.error(f"Error running isolate: {e.stderr}")
+        return None
+
+# -------------------------
 # Routes
 # -------------------------
 @app.route("/")
@@ -58,7 +77,7 @@ def home():
 
         return f"Judge0 Worker running! DB time: {result[0]}"
 
-    except pool.PoolError:  # <-- Fixed reference here
+    except pool.PoolError:
         return "All database connections are busy, try again later.", 503
     except Exception as e:
         logging.error(f"DB query failed: {e}")
@@ -72,6 +91,5 @@ def home():
 # -------------------------
 if __name__ == "__main__":
     port = int(os.environ.get("WORKER_PORT", 2358))
-    # Dev server only; in production use Gunicorn
     logging.info(f"🚀 Starting Flask dev server on 0.0.0.0:{port}")
     app.run(host="0.0.0.0", port=port)

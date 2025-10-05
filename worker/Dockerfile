@@ -49,6 +49,7 @@ COPY worker.py ./
 # -------------------------
 # Run as root for isolate (requires root privileges)
 # -------------------------
+# Removed root requirement to support non-root execution on Render
 
 # -------------------------
 # Expose the port
